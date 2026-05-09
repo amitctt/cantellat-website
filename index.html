@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cantellat - Outcomes at Machine Speed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2a3a 0%, #1a3a4a 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(15, 42, 58, 0.95);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .cta-button {
+            background: #00d4ff;
+            color: #0f2a3a;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #00b8d4;
+        }
+
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #0a1929;
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            color: #fff;
+        }
+
+        .close {
+            color: #00D4FF;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00D4FF;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-button-outline {
+            background: transparent;
+            color: #00d4ff;
+            border: 2px dashed #00d4ff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button-outline:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .hero .accent {
+            color: #00d4ff;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Three Questions Section */
+        .questions-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .question-card {
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .question-card:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            background: rgba(26, 58, 74, 0.8);
+            transform: translateY(-4px);
+        }
+
+        .question-card h3 {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-card p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .proof-point {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid #00d4ff;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #e0e0e0;
+        }
+
+        .card-cta {
+            margin-top: 1.5rem;
+        }
+
+        /* Metrics Section */
+        .metrics-section {
+            background: rgba(0, 212, 255, 0.05);
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .metrics-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .metric {
+            padding: 1.5rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Clients & Partners Section */
+        .clients-partners-section {
+            background: rgba(26, 58, 74, 0.4);
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .clients-partners-section .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .clients-partners-section .section-title {
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .logos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 2rem;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .logo-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 212, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .logo-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: brightness(1.1) invert(0.15);
+            transition: filter 0.3s ease;
+        }
+
+        .logo-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        .logo-item:hover .logo-image {
+            filter: brightness(1.2) invert(0.1);
+            transform: scale(1.08);
+        }
+
+        /* BFSI & Fintech Section */
+        .bfsi-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .bfsi-content {
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .bfsi-content h2 {
+            color: #00d4ff;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .bfsi-content p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .bfsi-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .highlight {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid #00ff00;
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .highlight h4 {
+            color: #00ff00;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight p {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+        }
+
+        /* Clients Section */
+        .clients-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .client-logo {
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            transition: all 0.3s;
+            flex-direction: column;
+        }
+
+        .client-logo:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            background: rgba(26, 58, 74, 0.8);
+        }
+
+        .client-logo img {
+            max-width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+        }
+
+        .client-logo p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Ecosystem Section */
+        .ecosystem-section {
+            background: rgba(0, 212, 255, 0.05);
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .ecosystem-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .ecosystem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ecosystem-card {
+            background: rgba(15, 42, 58, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .ecosystem-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .ecosystem-card p {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            background: rgba(26, 58, 74, 0.8);
+        }
+
+        .service-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .service-card p {
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .service-outcome {
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 3px solid #00ff00;
+            padding: 1rem;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 255, 0, 0.05) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 4rem auto;
+            max-width: 1000px;
+        }
+
+        .cta-section h2 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 42, 58, 0.95);
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #00d4ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            color: #808080;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .metric-value {
+                font-size: 2rem;
+            }
+
+            .questions-grid, .services-grid, .ecosystem-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script>
+        function openContactForm(outcomeType) {
+            document.getElementById('outcomeType').value = outcomeType;
+            document.getElementById('contactModal').style.display = 'block';
+            document.getElementById('name').focus();
+        }
+
+        function closeContactForm() {
+            document.getElementById('contactModal').style.display = 'none';
+            document.getElementById('contactForm').reset();
+        }
+
+        function submitContactForm(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const message = document.getElementById('message').value;
+            const outcomeType = document.getElementById('outcomeType').value;
+
+            // Create mailto link
+            const subject = encodeURIComponent(`Cantellat Inquiry: ${outcomeType}`);
+            const body = encodeURIComponent(`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nOutcome Type: ${outcomeType}\n\nMessage:\n${message}`);
+            window.location.href = `mailto:amit.shukla@cantellat.com?subject=${subject}&body=${body}`;
+
+            closeContactForm();
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target === modal) {
+                closeContactForm();
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <img src="images/logos/cantellat-logo.webp" alt="Cantellat" style="height: 40px; width: auto;">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#questions">How We Work</a></li>
+                <li><a href="#bfsi">BFSI & Fintech</a></li>
+                <li><a href="technical-prowess.html">AI, Blockchain & Cyber</a></li>
+                <li><a href="#ecosystem">Ecosystem</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Start a Conversation</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Outcomes at <span class="accent">Machine Speed</span></h1>
+        <p style="font-size: 1.1rem; max-width: 900px; margin-left: auto; margin-right: auto;">We deliver measurable business outcomes in weeks, not quarters. Strategy. Engineering. Execution. Integrated.</p>
+        <div class="hero-ctas">
+            <a href="#questions" class="cta-button">Explore How We Deliver</a>
+            <a href="#contact" class="cta-button-outline">Start a Discovery Call</a>
+        </div>
+    </section>
+
+    <!-- Clients & Partners Section -->
+    <section class="clients-partners-section">
+        <div class="container">
+            <h2 class="section-title">Trusted Clients & Partners</h2>
+            <p class="section-subtitle">A network of delivery relationships and ecosystem partnerships</p>
+            
+            <div class="logos-grid">
+                <div class="logo-item">
+                    <img src="images/logos/purview-logo-blue.png" alt="Purview" class="logo-image">
+                </div>
+                <div class="logo-item">
+                    <img src="images/logos/Spryple-logo-e1733136151953.png" alt="Spryple" class="logo-image">
+                </div>
+                <div class="logo-item">
+                    <img src="images/logos/NFHLogo-Unit-Black.svg" alt="NFH" class="logo-image">
+                </div>
+                <div class="logo-item">
+                    <img src="images/logos/servcrust.png" alt="ServCrust" class="logo-image">
+                </div>
+                <div class="logo-item">
+                    <img src="images/logos/fnet-logo-blue-png.webp" alt="Finternet" class="logo-image">
+                </div>
+                <div class="logo-item">
+                    <img src="images/logos/C2Hirelogo.jpg" alt="C2Hire" class="logo-image">
+                </div>
+                <div class="logo-item">
+                    <img src="images/logos/UD_logo.dd7597f0.svg" alt="Union Digital" class="logo-image">
+                </div>
+                <div class="logo-item">
+                    <img src="images/logos/beckn-logo.svg" alt="Beckn" class="logo-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Discovery Questions Section -->
+    <section class="questions-section" id="questions">
+        <div class="questions-grid" style="display: flex; gap: 2rem; align-items: stretch;">
+            <!-- Question 1 -->
+            <div class="question-card" style="flex: 1; display: flex; flex-direction: column;">
+                <h3 style="font-size: 1.4rem; text-align: center; margin-bottom: 1.5rem; min-height: 3.5rem; display: flex; align-items: center; justify-content: center;">What is a problem you cannot afford to solve?</h3>
+                <p style="text-align: center; flex-grow: 1;">Critical challenges remain unaddressed when traditional execution costs are prohibitive. We make the unsolvable affordable through AI-native execution.</p>
+                <div class="proof-point" style="text-align: center; margin: 2rem 0;">
+                    <div style="margin-bottom: 0.5rem;"><strong>Rapid</strong> deployment</div>
+                    <div><strong>Significant</strong> cost reduction</div>
+                </div>
+                <p style="text-align: center; font-size: 0.95rem; margin-bottom: 2rem; color: #b0b0b0;">What takes quarters and millions elsewhere, we deliver in weeks, and at a fraction of the cost.</p>
+                <div class="card-cta" style="text-align: center; margin-top: auto;">
+                    <a href="#contact" class="cta-button-outline" style="width: 100%;">Explore This</a>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" style="flex: 1; display: flex; flex-direction: column;">
+                <h3 style="font-size: 1.4rem; text-align: center; margin-bottom: 1.5rem; min-height: 3.5rem; display: flex; align-items: center; justify-content: center;">What is your most expensive operation?</h3>
+                <p style="text-align: center; flex-grow: 1;">Operational bloat drains capital silently. We identify your most expensive process and systematically automate it through agentic workflows.</p>
+                <div class="proof-point" style="text-align: center; margin: 2rem 0;">
+                    <div><strong>30-50%</strong> cost reduction</div>
+                </div>
+                <p style="text-align: center; font-size: 0.95rem; margin-bottom: 2rem; color: #b0b0b0;">Capital freed from operations to fund strategic growth.</p>
+                <div class="card-cta" style="text-align: center; margin-top: auto;">
+                    <a href="#contact" class="cta-button-outline" style="width: 100%;">Calculate Opportunity</a>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" style="flex: 1; display: flex; flex-direction: column;">
+                <h3 style="font-size: 1.4rem; text-align: center; margin-bottom: 1.5rem; min-height: 3.5rem; display: flex; align-items: center; justify-content: center;">What capability would grow your revenue?</h3>
+                <p style="text-align: center; flex-grow: 1;">Growth is constrained by execution capability, not market opportunity. We build and deploy net-new revenue capabilities at machine speed.</p>
+                <div class="proof-point" style="text-align: center; margin: 2rem 0;">
+                    <div><strong>3.5x</strong> pipeline improvement</div>
+                </div>
+                <p style="text-align: center; font-size: 0.95rem; margin-bottom: 2rem; color: #b0b0b0;">Measurable revenue impact in weeks, not years.</p>
+                <div class="card-cta" style="text-align: center; margin-top: auto;">
+                    <a href="#contact" class="cta-button-outline" style="width: 100%;">Build Capability</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Section -->
+    <section class="metrics-section">
+        <div class="metrics-container">
+            <h2 class="section-title">Outcomes Across Enterprise, Government, and Fintech</h2>
+            <div class="metrics-grid">
+                <div class="metric">
+                    <div class="metric-value">3.5x</div>
+                    <div class="metric-label">Pipeline Improvement</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">55%</div>
+                    <div class="metric-label">Manual Reduction</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">30-50%</div>
+                    <div class="metric-label">Cost Reduction</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">8 weeks</div>
+                    <div class="metric-label">To Deployment</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BFSI & Fintech Section -->
+    <section class="bfsi-section" id="bfsi">
+        <h2 class="section-title">BFSI Consulting & Delivery: Our Core Strength</h2>
+        
+        <div class="bfsi-content">
+            <h2>Banking, Financial Services & Insurance Expertise</h2>
+            <p>BFSI transformation requires integrated strategy, technology, and regulatory execution. We deliver banking and financial services transformations at machine speed through domain expertise and engineering execution.</p>
+            
+            <div style="margin: 2rem 0; padding: 2rem; background: rgba(0, 212, 255, 0.05); border-left: 4px solid #00D4FF; border-radius: 0 8px 8px 0;">
+                <h3 style="color: #00D4FF; margin-bottom: 1.5rem; font-size: 1.3rem;">Active Transformations & Ecosystems</h3>
+                <div style="margin-bottom: 1.5rem;">
+                    <p style="margin-bottom: 0.5rem;"><strong>Union Digital Philippines:</strong> Currently executing an active digital banking transformation project, deploying modern infrastructure to accelerate financial inclusion.</p>
+                </div>
+                <div style="margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 1.5rem;">
+                    <div style="flex: 1;">
+                        <p><strong>Finternet:</strong> Building the financial internet alongside Finternet, creating the programmable infrastructure for the next generation of global finance.</p>
+                    </div>
+                    <img src="images/logos/fnet-logo-blue-png.webp" alt="Finternet" style="height: 28px; flex-shrink: 0; margin-top: 0.25rem; filter: brightness(1.1) invert(0.15);">
+                </div>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.3rem;">Leadership & Institutional Expertise</h3>
+                <p style="margin-bottom: 1rem;">Our leadership brings decades of institutional experience from <strong>Bank of America, Wells Fargo, HSBC, and Accenture</strong>. We have led complex regulatory and transformation programs globally, with deep specialization in AML and compliance.</p>
+                <p style="margin-bottom: 1rem;">This expertise is backed by multiple patents contributed to in the areas of <strong>customer onboarding, KYC, and AML</strong>.</p>
+                <p>We are looking to transform ASEAN small to mid-tier banks and the broader banking & financial ecosystem. By combining the power of agentic AI with programmable finance, we provide the execution engine where governments and countries are looking to transform.</p>
+            </div>
+            
+            <div class="bfsi-highlights" style="margin-top: 3rem;">
+                <div class="highlight">
+                    <h4>Digital Banking Platforms</h4>
+                    <p>Deploy digital banking infrastructure with Wow Finstack, backed by BFSI consulting and regulatory expertise.</p>
+                </div>
+                <div class="highlight">
+                    <h4>Embedded Finance</h4>
+                    <p>Expand into financial services without building infrastructure from scratch. Fintech platform + GTM execution.</p>
+                </div>
+                <div class="highlight">
+                    <h4>Payment Modernization</h4>
+                    <p>Upgrade legacy payment systems to enterprise-grade infrastructure. Compliance-first, speed-optimized deployment.</p>
+                </div>
+                <div class="highlight">
+                    <h4>Regulatory Compliance</h4>
+                    <p>Navigate complex regulatory environments across geographies. Compliance architecture built into every deployment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-section">
+        <h2 class="section-title">Trusted by Leading Organizations</h2>
+        
+        <div class="clients-grid">
+            <div class="client-logo" style="flex-direction: column; justify-content: center;">
+                <img src="images/logos/UD_logo.dd7597f0.svg" alt="Union Digital Philippines" style="max-width: 100px; max-height: 50px; margin-bottom: 1rem;">
+                <div style="text-align: center;">
+                    <p style="font-weight: 600; color: #ffffff; margin-bottom: 0.25rem;">Union Digital Philippines</p>
+                    <p style="font-size: 0.9rem; color: #b0b0b0;">Digital Banking Platform</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section class="ecosystem-section" id="ecosystem">
+        <div class="ecosystem-container">
+            <h2 class="section-title">Powered by Our Integrated Ecosystem</h2>
+            <p style="text-align: center; color: #b0b0b0; margin-bottom: 2rem;">Our ecosystem is not a collection of partners. It is the execution engine that powers every outcome.</p>
+            
+            <div class="ecosystem-grid">
+                <div class="ecosystem-card">
+                    <h3>Wow Finstack</h3>
+                    <p>Enterprise-grade fintech infrastructure. Digital banking. Embedded finance. Payment systems. Deployed in weeks, not months.</p>
+                </div>
+                <div class="ecosystem-card">
+                    <h3>CloudShot</h3>
+                    <p>Cloud infrastructure optimization. Reduced costs. Improved resilience. The foundation for scalable systems.</p>
+                </div>
+                <div class="ecosystem-card">
+                    <h3>Cybersecurity</h3>
+                    <p>Embedded trust and compliance. Enterprise security. Regulatory adherence. Built into every deployment.</p>
+                </div>
+                <div class="ecosystem-card">
+                    <h3>Agentic AI Systems</h3>
+                    <p>Autonomous workflow execution. The 30-50% cost reductions. The machine-speed delivery. Intelligence that acts.</p>
+                </div>
+                <div class="ecosystem-card">
+                    <h3>Cantellat Execution</h3>
+                    <p>The connective tissue. Strategy flows into engineering. Engineering flows into deployed capability. Integrated execution model.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <h2 class="section-title">How We Deliver Outcomes</h2>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Problem-to-Execution Acceleration</h3>
+                <p>Move from strategic intent to operational reality in 8 weeks. Problem structuring → Solution architecture → Build → Deploy.</p>
+                <div class="service-outcome">
+                    <strong>Outcome:</strong> Operational system live, measurable business impact
+                </div>
+            </div>
+
+            <div class="service-card">
+                <h3>Cost Reduction Through Automation</h3>
+                <p>Identify your most expensive operation and automate it. 30-50% cost reduction while improving quality and speed.</p>
+                <div class="service-outcome">
+                    <strong>Outcome:</strong> $500K-$5M capital freed annually
+                </div>
+            </div>
+
+            <div class="service-card">
+                <h3>Revenue Capability Deployment</h3>
+                <p>Build and deploy net-new revenue capabilities at machine speed. Embedded finance. Digital banking. AI-powered acquisition.</p>
+                <div class="service-outcome">
+                    <strong>Outcome:</strong> $2M-$50M annual revenue impact
+                </div>
+            </div>
+
+            <div class="service-card">
+                <h3>Enterprise Transformation Programs</h3>
+                <p>Multi-phase transformations delivered on time, on budget, with measurable outcomes. Execution governance. Alliance management.</p>
+                <div class="service-outcome">
+                    <strong>Outcome:</strong> Proven delivery methodology across enterprise, government, fintech
+                </div>
+            </div>
+
+            <div class="service-card">
+                <h3>Workforce at Scale</h3>
+                <p>Build-Train-Deploy teams. Execution-ready talent. No hiring delays. No ramp-up time. Embedded from day one.</p>
+                <div class="service-outcome">
+                    <strong>Outcome:</strong> Skilled teams deployed in weeks, not months
+                </div>
+            </div>
+
+            <div class="service-card">
+                <h3>Data-First AI Infrastructure</h3>
+                <p>Data mesh architecture. AI-native pipelines. Real-time decision-making. 55% reduction in manual reporting.</p>
+                <div class="service-outcome">
+                    <strong>Outcome:</strong> Foundation for continuous AI deployment
+                </div>
+            </div>
+
+            <div class="service-card">
+                <h3>Workforce Academy & Deployment</h3>
+                <p>Build-Train-Deploy programs in AI, cybersecurity, blockchain, and platform engineering. Real problem statements. Verified talent network. Direct ecosystem integration.</p>
+                <div class="service-outcome">
+                    <strong>Outcome:</strong> Skilled, verified talent deployed immediately
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Prowess Section -->
+    <section class="bfsi-section" id="technical-prowess">
+        <h2 class="section-title">Technical Prowess: Three Parallel Pillars</h2>
+        
+        <div class="bfsi-content">
+            <h2>Implementation Strength Powered By</h2>
+            <p>Our execution capability is strengthened by three parallel technical prowess pillars: agentic AI systems, cryptographic infrastructure and blockchain, and cybersecurity. These are not separate offerings—they are foundational capabilities that enhance every implementation, training program, and deployment.</p>
+            
+            <div class="bfsi-highlights">
+                <div class="highlight">
+                    <h4>Real-Time Operational Intelligence</h4>
+                    <p>ServCrust platform: AI-native operational systems coordinating large distributed networks. Real-time monitoring, geospatial intelligence, predictive logistics. Connects suppliers, fleets, field teams, and customers through unified intelligence layer.</p>
+                </div>
+                <div class="highlight">
+                    <h4>IoT & Telemetry at Scale</h4>
+                    <p>Full-stack capability from sensor ingestion to ML models to live dashboards. Real-time stream processing, anomaly detection, asset utilization. Demonstrates comprehensive engineering depth across data science, platform engineering, and DevOps.</p>
+                </div>
+                <div class="highlight">
+                    <h4>Enterprise SaaS & Security</h4>
+                    <p>Production-grade platforms built with security-first architecture. From HR and workforce management to cybersecurity intelligence systems. 60+ engineers delivering large-scale platform delivery with continuous optimization.</p>
+                </div>
+                <div class="highlight">
+                    <h4>SkillNet Workforce Academy</h4>
+                    <p>Build-Train-Deploy programs across AI, blockchain, cybersecurity, and platform engineering. Participants develop expertise through building real systems. Verified talent network deployed into ecosystem initiatives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>What is your outcome?</h2>
+        <p>Let's start with one of three questions. The answer determines the engagement path. The outcome determines the value.</p>
+        <div class="cta-buttons">
+            <button class="cta-button" onclick="openContactForm('I have a problem I cannot afford to solve')">I have a problem I cannot afford to solve</button>
+            <button class="cta-button" onclick="openContactForm('I want to cut costs by 30-50%')">I want to cut costs by 30-50%</button>
+            <button class="cta-button" onclick="openContactForm('I want to build a new revenue capability')">I want to build a new revenue capability</button>
+        </div>
+    </section>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeContactForm()">&times;</span>
+            <h2>Let's Talk</h2>
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+                <input type="hidden" id="outcomeType" name="outcomeType">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="cta-button">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Cantellat</h4>
+                <p>Outcomes at machine speed. Not platforms. Not services. Outcomes.</p>
+                <p style="margin-top: 1rem;">We move from strategic intent to operational reality in weeks, not years.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="#home">Home</a></p>
+                <p><a href="#questions">How We Work</a></p>
+                <p><a href="#bfsi">BFSI & Fintech</a></p>
+                <p><a href="#ecosystem">Ecosystem</a></p>
+                <p><a href="#services">Services</a></p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:amit.shukla@cantellat.com">contact@cantellat.com</a></p>
+                <p>Phone: <a href="tel:+6581186414">+65 8118 6414</a></p>
+                <p style="margin-top: 1rem;">Hyderabad, India<br>Singapore<br>United States<br>ASEAN</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Ecosystem</h4>
+                <p><a href="#">Wow Finstack</a></p>
+                <p><a href="#">CloudShot</a></p>
+                <p><a href="#">Cybersecurity</a></p>
+                <p><a href="#">Agentic AI</a></p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Cantellat Solutions. All rights reserved. | Outcomes at Machine Speed</p>
+        </div>
+    </footer>
+</body>
+</html>

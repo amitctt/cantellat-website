@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI, Blockchain & Cyber - Cantellat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2a3a 0%, #1a3a4a 100%);
+            color: #b0b8c1;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(15, 42, 58, 0.95);
+            border-bottom: 1px solid #00d4ff;
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #b0b8c1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .cta-button {
+            background: #00d4ff;
+            color: #0f2a3a;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #00b8d4;
+            transform: translateY(-2px);
+        }
+
+        .hero-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .hero-section h1 span {
+            color: #00d4ff;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #b0b8c1;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .pillars-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #b0b8c1;
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pillar-card {
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid #00d4ff;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .pillar-card:hover {
+            background: rgba(26, 58, 74, 0.9);
+            border-color: #00ff00;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .pillar-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .pillar-card p {
+            color: #b0b8c1;
+            line-height: 1.7;
+        }
+
+        .use-cases-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .use-case {
+            background: rgba(26, 58, 74, 0.4);
+            border-left: 4px solid #00d4ff;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .use-case:hover {
+            background: rgba(26, 58, 74, 0.7);
+            border-left-color: #00ff00;
+        }
+
+        .use-case h3 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .use-case-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .use-case-block h4 {
+            color: #00ff00;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .use-case-block p {
+            color: #b0b8c1;
+            line-height: 1.7;
+        }
+
+        .outcome-box {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px dashed #00d4ff;
+            padding: 1.5rem;
+            border-radius: 4px;
+            color: #b0b8c1;
+        }
+
+        .outcome-box strong {
+            color: #00d4ff;
+        }
+
+        .clients-partners-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .logo-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            transition: all 0.3s;
+            min-height: 120px;
+        }
+
+        .logo-item:hover {
+            background: rgba(26, 58, 74, 0.9);
+            border-color: #00ff00;
+            transform: scale(1.05);
+        }
+
+        .logo-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .contact-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+        }
+
+        .contact-section h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-section p {
+            color: #b0b8c1;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .contact-button {
+            background: #00d4ff;
+            color: #0f2a3a;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contact-button:hover {
+            background: #00b8d4;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
+        }
+
+        footer {
+            background: rgba(15, 42, 58, 0.95);
+            border-top: 1px solid #00d4ff;
+            padding: 2rem;
+            text-align: center;
+            color: #b0b8c1;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .use-case-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="images/logos/cantellat-logo.webp" alt="Cantellat" style="height: 40px; width: auto;">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#questions">How We Work</a></li>
+                <li><a href="bfsi.html">BFSI & Fintech</a></li>
+                <li><a href="technical-prowess.html">AI, Blockchain & Cyber</a></li>
+                <li><a href="index.html#ecosystem">Ecosystem</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <a href="index.html#contact" class="cta-button">Start a Conversation</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>Cyber-Secure, AI-Native, Blockchain-Trust Powerhouse</h1>
+        <p>Three integrated technical capabilities that eliminate execution risk and accelerate deployment. Agentic AI, Cryptographic Infrastructure & Blockchain, and Cybersecurity are foundational to every implementation, training program, and deployment. These are not separate offerings—they are the technical foundation of Cantellat's execution model.</p>
+    </section>
+
+    <!-- Three Pillars -->
+    <section class="pillars-section">
+        <h2 class="section-title">Three Integrated Technical Capabilities</h2>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <h3>Agentic AI Systems</h3>
+                <p>Autonomous agents, intelligent decision-making, continuous learning systems. Built into our implementation approach. Strengthens automation, optimization, and real-time capability across all engagements. Demonstrated through ServCrust operational intelligence platform.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>Cryptographic Infrastructure & Blockchain</h3>
+                <p>Cryptographic systems, smart contracts, protocol integration. When required by use cases, deployed with production-grade technical prowess. Strengthens trust, transparency, and decentralized capability. Active initiatives: equipment tokenization and gold-based loyalty programs.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>Cybersecurity as Foundation</h3>
+                <p>Threat modeling, vulnerability assessment, compliance frameworks, cryptographic security. Built into every system we deploy. Strengthens security posture, reduces risk, and ensures regulatory compliance. Demonstrated through enterprise transformations and SkillNet workforce academy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Examples -->
+    <section class="use-cases-section">
+        <h2 class="section-title">Implementation Examples & Ongoing Initiatives</h2>
+        <p class="section-subtitle">Proven deployments and ecosystem initiatives demonstrating technical prowess across AI, Blockchain, and Cybersecurity</p>
+
+        <div class="use-case">
+            <h3>AI-Native Operational Intelligence: ServCrust Platform</h3>
+            <div class="use-case-content">
+                <div class="use-case-block">
+                    <h4>Challenge</h4>
+                    <p>Large logistics and operations network spanning multiple regions. Manual tracking of orders, deliveries, supplier performance, and regional KPIs. Lack of unified visibility across suppliers, fleets, field teams, and operations managers.</p>
+                </div>
+                <div class="use-case-block">
+                    <h4>Cantellat Solution</h4>
+                    <p>ServCrust operational platform deployment. AI-native architecture for real-time monitoring across all regions. Geospatial intelligence for district-level visibility. Predictive logistics for demand and optimization. Unified intelligence layer connecting all stakeholders.</p>
+                </div>
+            </div>
+            <div class="outcome-box">
+                <strong>Outcome:</strong> Live operational visibility across regions. Real-time KPI tracking. Improved business visibility. Reduced operational costs through predictive optimization. Increased sales through better coordination. Deployed in weeks, not quarters or years.
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>Cloud Infrastructure Optimization: CloudShot Platform</h3>
+            <div class="use-case-content">
+                <div class="use-case-block">
+                    <h4>Proven Results</h4>
+                    <p><strong>EU Enterprise:</strong> $1.3M annual savings through multi-cloud visibility and resource optimization. Identified and reversed cost spikes in days using visual FinOps mapping. <strong>SaaS Analytics Firm:</strong> $90K annual savings with improved uptime and automated monitoring. <strong>AWS Premium Partner:</strong> $270K savings managing complex multi-cloud environments. <strong>Fast-Growing Retailer:</strong> $120K annual savings optimizing peak traffic infrastructure.</p>
+                </div>
+                <div class="use-case-block">
+                    <h4>Technical Approach</h4>
+                    <p>CloudShot platform for multi-cloud visibility, resource optimization, and automated cost management. Real-time monitoring across cloud accounts, regions, and providers. AI-driven anomaly detection and cost optimization recommendations. Integrated compliance and security monitoring.</p>
+                </div>
+            </div>
+            <div class="outcome-box">
+                <strong>Outcome:</strong> Enterprises achieve 20-30% cloud cost reduction through visibility and optimization. Improved operational efficiency, reduced manual overhead, enhanced compliance. Proven across EU enterprises, SaaS providers, and global retailers.
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>Enterprise-Scale Cybersecurity Transformation</h3>
+            <div class="use-case-content">
+                <div class="use-case-block">
+                    <h4>Proven Results</h4>
+                    <p><strong>Pitney Bowes (100K servers):</strong> 75% reduction in critical vulnerabilities. <strong>BP (200+ global locations):</strong> 60% reduction in admin overhead. <strong>VISA (30K AWS assets):</strong> 70% compliance cost reduction. <strong>Cebuana Lhuillier (PJIL):</strong> 1500+ firewalls audited and secured. Plus industry-aligned cybersecurity professional training program with global university accreditation pathways.</p>
+                </div>
+                <div class="use-case-block">
+                    <h4>Technical Approach</h4>
+                    <p>Enterprise security transformation combining threat modeling, vulnerability assessment, compliance frameworks, and cryptographic security. AI-enhanced security monitoring and incident response. SkillNet workforce academy for building in-house security expertise. Continuous security improvement through verified talent network.</p>
+                </div>
+            </div>
+            <div class="outcome-box">
+                <strong>Outcome:</strong> Enterprises achieve 60-75% reduction in critical vulnerabilities and compliance costs. Enhanced security posture across global operations. Verified security professionals trained and deployed. Continuous security improvement through integrated SkillNet academy.
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>Blockchain: Equipment Tokenization (Ongoing Ecosystem Initiative)</h3>
+            <div class="use-case-content">
+                <div class="use-case-block">
+                    <h4>Ecosystem Building</h4>
+                    <p>Building blockchain infrastructure for equipment asset tokenization. Developing cryptographic systems for asset identity, ownership tracking, and smart contract automation. Integrating AI for predictive asset lifecycle management and security protocols for cryptographic verification.</p>
+                </div>
+                <div class="use-case-block">
+                    <h4>Technical Approach</h4>
+                    <p>Blockchain infrastructure with embedded AI for asset optimization. Cryptographic systems for identity and ownership. Smart contracts for lifecycle automation. Security-first architecture with threat modeling and compliance frameworks built in from inception.</p>
+                </div>
+            </div>
+            <div class="outcome-box">
+                <strong>Vision:</strong> Enable enterprises to tokenize equipment assets on blockchain with transparent ownership, automated lifecycle management, and new financing models. Integrating AI, blockchain, and cybersecurity into a unified ecosystem for asset-backed financing and trading.
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>Blockchain: Gold-Based Loyalty Programs (Ongoing Ecosystem Initiative)</h3>
+            <div class="use-case-content">
+                <div class="use-case-block">
+                    <h4>Ecosystem Building</h4>
+                    <p>Building blockchain-based loyalty platforms backed by physical assets. Developing tokenization infrastructure with cryptographic verification, AI-driven valuation engines, and security protocols for custody and compliance.</p>
+                </div>
+                <div class="use-case-block">
+                    <h4>Technical Approach</h4>
+                    <p>Blockchain infrastructure with AI for real-time asset valuation. Cryptographic systems for asset verification and custody. Smart contracts for automated settlement and redemption. Security-first architecture with compliance frameworks and threat modeling integrated throughout.</p>
+                </div>
+            </div>
+            <div class="outcome-box">
+                <strong>Vision:</strong> Enable enterprises to build loyalty programs backed by physical assets (gold, commodities) with transparent redemption, real-time valuation, and automated settlement. Combining blockchain trust, AI intelligence, and cybersecurity into a unified ecosystem for asset-backed loyalty economics.
+            </div>
+        </div>
+
+        <div class="use-case">
+            <h3>Cybersecurity & AI: SkillNet + Beckn Integration (Ongoing Initiative)</h3>
+            <div class="use-case-content">
+                <div class="use-case-block">
+                    <h4>Ecosystem Building</h4>
+                    <p>Building integrated workforce academy combining cybersecurity training with open network protocols (Beckn). Developing verified talent network with expertise in threat modeling, vulnerability assessment, compliance, and cryptographic security. Training participants on building secure, interoperable systems.</p>
+                </div>
+                <div class="use-case-block">
+                    <h4>Technical Approach</h4>
+                    <p>SkillNet academy with Build-Train-Deploy methodology. Participants develop expertise through building live systems on Beckn protocol. Security-first curriculum covering threat modeling, vulnerability assessment, compliance frameworks, and cryptographic security. AI-enhanced learning paths for continuous skill development.</p>
+                </div>
+            </div>
+            <div class="outcome-box">
+                <strong>Vision:</strong> Build a verified talent network of cybersecurity professionals trained on open, interoperable protocols. Combining SkillNet workforce academy with Beckn ecosystem to create security-first, AI-enhanced, interoperable systems. Participants develop real expertise through building and auditing live systems.
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients & Partners -->
+    <section class="clients-partners-section">
+        <h2 class="section-title">Trusted Clients & Partners</h2>
+        <p class="section-subtitle">A network of delivery relationships and ecosystem partnerships</p>
+        <div class="logo-grid">
+            <div class="logo-item">
+                <img src="images/logos/purview-logo-blue.png" alt="Purview" class="logo-image">
+            </div>
+            <div class="logo-item">
+                <img src="images/logos/Spryple-logo-e1733136151953.png" alt="Spryple" class="logo-image">
+            </div>
+            <div class="logo-item">
+                <img src="images/logos/NFHLogo-Unit-Black.svg" alt="NFH" class="logo-image">
+            </div>
+            <div class="logo-item">
+                <img src="images/logos/servcrust.png" alt="ServCrust" class="logo-image">
+            </div>
+            <div class="logo-item">
+                <img src="images/logos/fnet-logo-blue-png.webp" alt="Finternet" class="logo-image">
+            </div>
+            <div class="logo-item">
+                <img src="images/logos/Cloudshot.png" alt="CloudShot" class="logo-image">
+            </div>
+            <div class="logo-item">
+                <img src="images/logos/UD_logo.dd7597f0.svg" alt="Union Digital" class="logo-image">
+            </div>
+            <div class="logo-item">
+                <img src="images/logos/Skillnetlogo.png" alt="SkillNet" class="logo-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <h2>Ready to Build Your Technical Powerhouse?</h2>
+        <p>Let's discuss how Cantellat's cyber-secure, AI-native, blockchain-trust capabilities can accelerate your outcomes.</p>
+        <a href="mailto:hello@cantellat.com" class="contact-button">Start a Conversation</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Cantellat. Outcomes at Machine Speed.</p>
+    </footer>
+</body>
+</html>

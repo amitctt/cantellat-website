@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workforce & Talent Solutions — Cantellat</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-y: scroll; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2a3a 0%, #1a3a4a 100%);
+            color: #e0e0e0; line-height: 1.6;
+        }
+        header {
+            background: rgba(15, 42, 58, 0.97);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.12);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        nav {
+            max-width: 1400px; margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 40px; width: auto; }
+        .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+        .nav-links a { color: #b0b0b0; text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: #00d4ff; }
+        .cta-button {
+            background: #00d4ff; color: #0f2a3a;
+            padding: 0.6rem 1.5rem; border: none; border-radius: 4px;
+            font-weight: 600; cursor: pointer; transition: background 0.3s;
+            text-decoration: none; display: inline-block; font-size: 0.9rem;
+        }
+        .cta-button:hover { background: #00b8d4; }
+
+        /* Modal */
+        .modal { position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); }
+        .modal-content {
+            background: #0a1929; margin: 5% auto; padding: 2rem;
+            border: 1px solid rgba(0,212,255,0.2); border-radius: 8px;
+            width: 90%; max-width: 500px; color: #fff;
+        }
+        .close { color: #00d4ff; float: right; font-size: 2rem; font-weight: bold; cursor: pointer; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.75rem;
+            border: 1px solid rgba(0,212,255,0.2); border-radius: 4px;
+            background: rgba(255,255,255,0.05); color: #fff;
+            font-family: inherit; box-sizing: border-box;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            max-width: 1400px; margin: 0 auto;
+            padding: 4rem 2rem 3rem; text-align: center;
+        }
+        .page-hero .eyebrow {
+            font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+            color: #00d4ff; margin-bottom: 1rem;
+        }
+        .page-hero h1 { font-size: 3rem; color: #fff; margin-bottom: 1rem; }
+        .page-hero h1 .accent { color: #00d4ff; }
+        .page-hero p { font-size: 1.1rem; color: #b0b0b0; max-width: 800px; margin: 0 auto; }
+
+        /* Section */
+        .section-wrapper { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        .section-title { font-size: 2rem; color: #fff; margin-bottom: 0.75rem; }
+        .section-sub { color: #888; font-size: 0.95rem; margin-bottom: 2.5rem; }
+
+        /* Pillars */
+        .pillars-section { padding: 4rem 2rem; }
+        .pillars-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .pillar-card {
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid rgba(0,212,255,0.18);
+            border-radius: 8px; padding: 2rem;
+            transition: all 0.3s;
+        }
+        .pillar-card:hover { border-color: rgba(0,212,255,0.45); transform: translateY(-3px); }
+        .pillar-number { font-size: 2.5rem; font-weight: 700; color: rgba(0,212,255,0.25); margin-bottom: 0.5rem; }
+        .pillar-card h3 { color: #00d4ff; font-size: 1.1rem; margin-bottom: 0.75rem; }
+        .pillar-card p { color: #9ab; font-size: 0.9rem; margin-bottom: 1rem; }
+        .pillar-items { list-style: none; }
+        .pillar-items li {
+            color: #b0b0b0; font-size: 0.85rem; padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .pillar-items li:last-child { border-bottom: none; }
+        .pillar-items li::before { content: "→ "; color: #00d4ff; }
+
+        /* Build-Train-Deploy */
+        .btd-section { padding: 4rem 2rem; background: rgba(0,0,0,0.1); }
+        .btd-container {
+            background: rgba(26,58,74,0.6);
+            border: 1px solid rgba(0,212,255,0.2);
+            border-radius: 8px; padding: 3rem;
+        }
+        .btd-container h2 { color: #00d4ff; font-size: 1.8rem; margin-bottom: 0.75rem; }
+        .btd-container > p { color: #b0b0b0; margin-bottom: 2rem; }
+        .btd-steps {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+        }
+        .btd-step {
+            text-align: center; padding: 2rem;
+            background: rgba(0,212,255,0.05);
+            border: 1px solid rgba(0,212,255,0.15); border-radius: 8px;
+        }
+        .btd-step .step-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .btd-step h3 { color: #00d4ff; margin-bottom: 0.5rem; }
+        .btd-step p { color: #9ab; font-size: 0.88rem; }
+
+        /* Banking Value Prop */
+        .banking-section { padding: 4rem 2rem; }
+        .banking-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .banking-card {
+            background: rgba(0,212,255,0.05);
+            border-left: 3px solid #00d4ff;
+            border-radius: 0 8px 8px 0; padding: 1.5rem;
+        }
+        .banking-card h4 { color: #00d4ff; margin-bottom: 0.5rem; }
+        .banking-card p { color: #b0b0b0; font-size: 0.88rem; }
+
+        /* Footer */
+        footer {
+            background: rgba(15,42,58,0.97);
+            border-top: 1px solid rgba(0,212,255,0.1);
+            padding: 3rem 2rem; margin-top: 4rem;
+        }
+        .footer-content {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 2rem;
+        }
+        .footer-section h4 { color: #00d4ff; margin-bottom: 1rem; font-size: 0.95rem; }
+        .footer-section p, .footer-section a { color: #888; font-size: 0.88rem; text-decoration: none; line-height: 1.9; }
+        .footer-section a:hover { color: #00d4ff; }
+        .footer-bottom {
+            text-align: center; border-top: 1px solid rgba(0,212,255,0.1);
+            padding-top: 2rem; margin-top: 2rem; color: #555; font-size: 0.82rem;
+        }
+
+        @media (max-width: 700px) {
+            .nav-links { display: none; }
+            .page-hero h1 { font-size: 2rem; }
+            .btd-steps { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        function openContactForm(outcomeType) {
+            document.getElementById('outcomeType').value = outcomeType;
+            document.getElementById('contactModal').style.display = 'block';
+        }
+        function closeContactForm() {
+            document.getElementById('contactModal').style.display = 'none';
+            document.getElementById('contactForm').reset();
+        }
+        function submitContactForm(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const message = document.getElementById('message').value;
+            const outcomeType = document.getElementById('outcomeType').value;
+            const subject = encodeURIComponent(`Cantellat Inquiry: ${outcomeType}`);
+            const body = encodeURIComponent(`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nOutcome Type: ${outcomeType}\n\nMessage:\n${message}`);
+            window.location.href = `mailto:amit.shukla@cantellat.com?subject=${subject}&body=${body}`;
+            closeContactForm();
+        }
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('contactModal')) closeContactForm();
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="images/logos/cantellat-logo.webp" alt="Cantellat">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#capabilities">Capabilities</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="bfsi.html">BFSI & Fintech</a></li>
+                <li><a href="workforce.html" class="active">Workforce</a></li>
+                <li><a href="technical-prowess.html">AI, Blockchain & Cyber</a></li>
+                <li><a href="index.html#ecosystem">Ecosystem</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="cta-button" onclick="openContactForm('Workforce Solutions Inquiry')">Start a Conversation</button>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <p class="eyebrow">Talent · Capability · Deployment</p>
+        <h1>Workforce & <span class="accent">Talent Solutions</span></h1>
+        <p>Complete workforce transformation for banking organizations and global enterprises. From talent acquisition to capability building — the full spectrum, powered by proprietary platforms and the Build-Train-Deploy model.</p>
+    </section>
+
+    <!-- 4 Capability Pillars -->
+    <section class="pillars-section">
+        <div class="section-wrapper">
+            <h2 class="section-title">Four Capability Pillars</h2>
+            <p class="section-sub">End-to-end workforce transformation across the full talent lifecycle</p>
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-number">01</div>
+                    <h3>Talent Acquisition & Recruitment</h3>
+                    <p>AI-powered sourcing and hiring across permanent, contract, and executive mandates.</p>
+                    <ul class="pillar-items">
+                        <li>Recruitment Process Outsourcing (RPO)</li>
+                        <li>Executive Search</li>
+                        <li>Permanent Hiring</li>
+                        <li>Contract Staffing</li>
+                    </ul>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-number">02</div>
+                    <h3>Talent Management & Intelligence</h3>
+                    <p>Data-driven talent intelligence and workforce management at enterprise scale.</p>
+                    <ul class="pillar-items">
+                        <li>Talent Management Systems (TMS)</li>
+                        <li>Workforce Management</li>
+                        <li>Talent Intelligence</li>
+                        <li>Skills Intelligence</li>
+                    </ul>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-number">03</div>
+                    <h3>Capability Development & Deployment</h3>
+                    <p>Structured programs that build, verify, and deploy high-performance talent.</p>
+                    <ul class="pillar-items">
+                        <li>Build-Train-Deploy Programs</li>
+                        <li>Learning & Development Platforms</li>
+                        <li>Digital Credentials</li>
+                        <li>Capability Development</li>
+                    </ul>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-number">04</div>
+                    <h3>Workforce Analytics & Optimization</h3>
+                    <p>Continuous data-driven insights to optimize workforce cost, quality, and performance.</p>
+                    <ul class="pillar-items">
+                        <li>Workforce Data Analytics</li>
+                        <li>Continuous Improvement</li>
+                        <li>Cost Optimization</li>
+                        <li>Performance Intelligence</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Build-Train-Deploy -->
+    <section class="btd-section">
+        <div class="section-wrapper">
+            <div class="btd-container">
+                <h2>The Build-Train-Deploy Model</h2>
+                <p>Our proprietary model for creating execution-ready talent at scale — designed specifically for organizations undergoing digital transformation.</p>
+                <div class="btd-steps">
+                    <div class="btd-step">
+                        <div class="step-icon">🏗</div>
+                        <h3>Build</h3>
+                        <p>Design bespoke talent programs aligned to your specific technology stack, operating model, and business outcomes. No generic training — purpose-built capability development.</p>
+                    </div>
+                    <div class="btd-step">
+                        <div class="step-icon">🎓</div>
+                        <h3>Train</h3>
+                        <p>Deliver structured programs across AI, cybersecurity, blockchain, platform engineering, and banking operations. Participants build expertise through real problem statements.</p>
+                    </div>
+                    <div class="btd-step">
+                        <div class="step-icon">🚀</div>
+                        <h3>Deploy</h3>
+                        <p>Verified, credentialed talent deployed directly into your teams or ecosystem initiatives. Execution-ready from day one — no ramp-up time, no hiring delays.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banking-Specific Value -->
+    <section class="banking-section">
+        <div class="section-wrapper">
+            <h2 class="section-title">Banking-Specific Value Proposition</h2>
+            <p class="section-sub">Workforce transformation designed for the unique demands of banking and financial services</p>
+            <div class="banking-grid">
+                <div class="banking-card">
+                    <h4>Digital Modernization</h4>
+                    <p>Build the talent foundation required for core banking modernization, cloud migration, and digital platform deployment.</p>
+                </div>
+                <div class="banking-card">
+                    <h4>Operations Scaling</h4>
+                    <p>Rapidly scale operations teams with embedded, execution-ready talent across technology, compliance, and customer operations.</p>
+                </div>
+                <div class="banking-card">
+                    <h4>Cost Optimization</h4>
+                    <p>Reduce talent acquisition costs and time-to-productivity through AI-powered sourcing and pre-trained deployment models.</p>
+                </div>
+                <div class="banking-card">
+                    <h4>Regulatory Capability</h4>
+                    <p>Build specialized talent in AML, KYC, compliance, and regulatory reporting — critical capabilities for banking transformation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="padding: 2rem 2rem 4rem;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.2); border-radius: 8px; padding: 3rem;">
+            <h2 style="color: #fff; font-size: 1.8rem; margin-bottom: 1rem;">Ready to Transform Your Workforce?</h2>
+            <p style="color: #b0b0b0; margin-bottom: 2rem;">Let's discuss your talent and capability requirements. We'll design a Build-Train-Deploy program tailored to your organization.</p>
+            <button class="cta-button" onclick="openContactForm('Workforce Solutions Inquiry')">Start a Conversation</button>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeContactForm()">&times;</span>
+            <h2>Let's Talk</h2>
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+                <input type="hidden" id="outcomeType" name="outcomeType">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="cta-button">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Cantellat</h4>
+                <p>Reshaping Possibilities with Native AI.</p>
+                <p style="margin-top: 0.75rem;">Strategy. Engineering. Workforce. Integrated.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Capabilities</h4>
+                <p><a href="index.html#capabilities">Strategic Consulting</a></p>
+                <p><a href="index.html#capabilities">Digital & Engineering</a></p>
+                <p><a href="workforce.html">Workforce Solutions</a></p>
+                <p><a href="index.html#products">Technology Products</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Specialisations</h4>
+                <p><a href="bfsi.html">BFSI & Fintech</a></p>
+                <p><a href="technical-prowess.html">AI, Blockchain & Cyber</a></p>
+                <p><a href="index.html#ecosystem">Ecosystem</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:amit.shukla@cantellat.com">contact@cantellat.com</a></p>
+                <p>Phone: <a href="tel:+6581186414">+65 8118 6414</a></p>
+                <p style="margin-top: 0.75rem;">Hyderabad · Singapore · United States · ASEAN</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Cantellat Solutions. All rights reserved. | Reshaping Possibilities with Native AI</p>
+        </div>
+    </footer>
+
+</body>
+</html>

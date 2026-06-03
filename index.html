@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cantellat — Reshaping Possibilities with Native AI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-y: scroll; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2a3a 0%, #1a3a4a 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* ── Header ── */
+        header {
+            background: rgba(15, 42, 58, 0.97);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.12);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        nav {
+            max-width: 1400px; margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 40px; width: auto; }
+        .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+        .nav-links a { color: #b0b0b0; text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+        .nav-links a:hover { color: #00d4ff; }
+        .cta-button {
+            background: #00d4ff; color: #0f2a3a;
+            padding: 0.6rem 1.5rem; border: none; border-radius: 4px;
+            font-weight: 600; cursor: pointer; transition: background 0.3s;
+            text-decoration: none; display: inline-block; font-size: 0.9rem;
+        }
+        .cta-button:hover { background: #00b8d4; }
+        .cta-button-outline {
+            background: transparent; color: #00d4ff;
+            border: 2px solid #00d4ff; padding: 0.6rem 1.5rem;
+            border-radius: 4px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; text-decoration: none; display: inline-block;
+        }
+        .cta-button-outline:hover { background: rgba(0, 212, 255, 0.1); }
+
+        /* ── Modal ── */
+        .modal { position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); }
+        .modal-content {
+            background: #0a1929; margin: 5% auto; padding: 2rem;
+            border: 1px solid rgba(0,212,255,0.2); border-radius: 8px;
+            width: 90%; max-width: 500px; color: #fff;
+        }
+        .close { color: #00d4ff; float: right; font-size: 2rem; font-weight: bold; cursor: pointer; }
+        .close:hover { color: #fff; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.75rem;
+            border: 1px solid rgba(0,212,255,0.2); border-radius: 4px;
+            background: rgba(255,255,255,0.05); color: #fff;
+            font-family: inherit; box-sizing: border-box;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none; border-color: #00d4ff; background: rgba(255,255,255,0.1);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            max-width: 1400px; margin: 0 auto;
+            padding: 5rem 2rem 3rem; text-align: center;
+        }
+        .hero-eyebrow {
+            font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase;
+            color: #00d4ff; margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-size: 3.6rem; margin-bottom: 1.5rem;
+            color: #ffffff; line-height: 1.15;
+        }
+        .hero h1 .accent { color: #00d4ff; }
+        .hero p {
+            font-size: 1.15rem; color: #b0b0b0;
+            max-width: 860px; margin: 0 auto 2.5rem;
+        }
+        .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* ── Stats Bar ── */
+        .stats-bar {
+            background: rgba(0, 212, 255, 0.06);
+            border-top: 1px solid rgba(0,212,255,0.15);
+            border-bottom: 1px solid rgba(0,212,255,0.15);
+            padding: 2.5rem 2rem;
+        }
+        .stats-container {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem; text-align: center;
+        }
+        .stat-item { padding: 0.5rem; }
+        .stat-value { font-size: 2rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.3rem; }
+        .stat-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+
+        /* ── Section Shared ── */
+        .section-title { font-size: 2.2rem; color: #fff; margin-bottom: 0.75rem; text-align: center; }
+        .section-sub { text-align: center; color: #888; font-size: 1rem; margin-bottom: 3rem; }
+        .section-wrapper { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+
+        /* ── Capability Architecture ── */
+        .capability-section { padding: 5rem 2rem; }
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .capability-card {
+            background: rgba(26, 58, 74, 0.6);
+            border: 1px solid rgba(0,212,255,0.18);
+            border-radius: 8px; padding: 1.75rem;
+            transition: all 0.3s;
+        }
+        .capability-card:hover {
+            border-color: rgba(0,212,255,0.45);
+            background: rgba(26,58,74,0.85);
+            transform: translateY(-3px);
+        }
+        .capability-card .cap-icon { font-size: 1.6rem; margin-bottom: 0.75rem; }
+        .capability-card h3 { color: #00d4ff; font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .capability-card p { color: #9ab; font-size: 0.88rem; line-height: 1.6; margin-bottom: 0.75rem; }
+        .cap-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .cap-tag {
+            background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2);
+            color: #00d4ff; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px;
+        }
+
+        /* Agentic Fabric centre card */
+        .agentic-core {
+            background: linear-gradient(135deg, rgba(0,212,255,0.12) 0%, rgba(0,100,150,0.2) 100%);
+            border: 1.5px solid rgba(0,212,255,0.4);
+            border-radius: 8px; padding: 2rem;
+            text-align: center; margin-bottom: 1.5rem;
+        }
+        .agentic-core h3 { color: #00d4ff; font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .agentic-core .agentic-sub { color: #888; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; }
+        .agentic-core p { color: #b0b0b0; font-size: 0.95rem; max-width: 700px; margin: 0 auto; }
+
+        /* ── Products ── */
+        .products-section { padding: 5rem 2rem; background: rgba(0,0,0,0.15); }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .product-card {
+            background: rgba(15,42,58,0.8);
+            border: 1px solid rgba(0,212,255,0.18);
+            border-radius: 8px; padding: 1.75rem;
+            transition: all 0.3s;
+        }
+        .product-card:hover { border-color: rgba(0,212,255,0.45); transform: translateY(-3px); }
+        .product-card .product-name { color: #00d4ff; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .product-card .product-category { color: #888; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; }
+        .product-card p { color: #9ab; font-size: 0.88rem; line-height: 1.6; }
+
+        /* ── Ecosystem / Logos ── */
+        .ecosystem-section { padding: 5rem 2rem; }
+        .ecosystem-category { margin-bottom: 3rem; }
+        .ecosystem-category h3 {
+            color: #00d4ff; font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,212,255,0.15);
+        }
+        .logos-row {
+            display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+        }
+        .logo-pill {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0,212,255,0.08);
+            border-radius: 6px; padding: 0.6rem 1.2rem;
+            display: flex; align-items: center; justify-content: center;
+            height: 56px; min-width: 100px;
+            transition: all 0.3s;
+        }
+        .logo-pill:hover { background: rgba(255,255,255,0.07); border-color: rgba(0,212,255,0.25); }
+        .logo-pill img { max-height: 34px; max-width: 110px; object-fit: contain; filter: brightness(1.05) contrast(1.1); }
+        .logo-pill.white-bg { background: #fff; border-color: rgba(255,255,255,0.2); }
+        .logo-pill.white-bg img { filter: none; }
+        .logo-text { color: #b0b0b0; font-size: 0.85rem; font-weight: 500; white-space: nowrap; }
+
+        /* ── BFSI ── */
+        .bfsi-section { padding: 5rem 2rem; background: rgba(0,0,0,0.1); }
+        .bfsi-content {
+            background: rgba(26,58,74,0.6); border: 1px solid rgba(0,212,255,0.2);
+            border-radius: 8px; padding: 3rem;
+        }
+        .bfsi-content h2 { color: #00d4ff; font-size: 1.8rem; margin-bottom: 1rem; }
+        .bfsi-content p { color: #b0b0b0; margin-bottom: 1.25rem; line-height: 1.8; }
+        .bfsi-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .highlight { background: rgba(0,212,255,0.05); border-left: 3px solid #00d4ff; padding: 1.5rem; border-radius: 4px; }
+        .highlight h4 { color: #00d4ff; margin-bottom: 0.5rem; }
+        .highlight p { color: #b0b0b0; font-size: 0.9rem; }
+
+        /* ── CTA Section ── */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(0,100,150,0.1) 100%);
+            border: 1px solid rgba(0,212,255,0.2); border-radius: 8px;
+            padding: 4rem 2rem; text-align: center;
+            margin: 4rem auto; max-width: 1000px;
+        }
+        .cta-section h2 { color: #fff; font-size: 2rem; margin-bottom: 1rem; }
+        .cta-section p { color: #b0b0b0; margin-bottom: 2rem; font-size: 1.05rem; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* ── Footer ── */
+        footer {
+            background: rgba(15,42,58,0.97);
+            border-top: 1px solid rgba(0,212,255,0.1);
+            padding: 3rem 2rem; margin-top: 4rem;
+        }
+        .footer-content {
+            max-width: 1400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 2rem;
+        }
+        .footer-section h4 { color: #00d4ff; margin-bottom: 1rem; font-size: 0.95rem; }
+        .footer-section p, .footer-section a { color: #888; font-size: 0.88rem; text-decoration: none; line-height: 1.9; }
+        .footer-section a:hover { color: #00d4ff; }
+        .footer-bottom {
+            text-align: center; border-top: 1px solid rgba(0,212,255,0.1);
+            padding-top: 2rem; margin-top: 2rem; color: #555; font-size: 0.82rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .capability-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .capability-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        function openContactForm(outcomeType) {
+            document.getElementById('outcomeType').value = outcomeType;
+            document.getElementById('contactModal').style.display = 'block';
+            document.getElementById('name').focus();
+        }
+        function closeContactForm() {
+            document.getElementById('contactModal').style.display = 'none';
+            document.getElementById('contactForm').reset();
+        }
+        function submitContactForm(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const message = document.getElementById('message').value;
+            const outcomeType = document.getElementById('outcomeType').value;
+            const subject = encodeURIComponent(`Cantellat Inquiry: ${outcomeType}`);
+            const body = encodeURIComponent(`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nOutcome Type: ${outcomeType}\n\nMessage:\n${message}`);
+            window.location.href = `mailto:amit.shukla@cantellat.com?subject=${subject}&body=${body}`;
+            closeContactForm();
+        }
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target === modal) closeContactForm();
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">
+                <img src="images/logos/cantellat-logo.webp" alt="Cantellat">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#capabilities">Capabilities</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="bfsi.html">BFSI & Fintech</a></li>
+                <li><a href="workforce.html">Workforce</a></li>
+                <li><a href="technical-prowess.html">AI, Blockchain & Cyber</a></li>
+                <li><a href="#ecosystem">Ecosystem</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button" onclick="openContactForm('General Inquiry')">Start a Conversation</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <p class="hero-eyebrow">Native AI · Strategy · Engineering · Workforce</p>
+        <h1>Reshaping Possibilities<br>with <span class="accent">Native AI</span></h1>
+        <p>Cantellat converges the power of Agentic AI, strategic consulting, digital engineering, and workforce transformation to build, train, and deploy high-performance operational assets across global enterprises and governments.</p>
+        <div class="hero-ctas">
+            <a href="#capabilities" class="cta-button">Explore Our Capabilities</a>
+            <a href="#contact" class="cta-button-outline" onclick="openContactForm('Discovery Call')">Start a Discovery Call</a>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-value">100+</div>
+                <div class="stat-label">Global Clients & Partners</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Continents — Global Delivery</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Core Capability Service Lines</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">4 Wks</div>
+                <div class="stat-label">To Functional Deployment</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">3 Mos</div>
+                <div class="stat-label">To Operational GCC Setup</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">55%</div>
+                <div class="stat-label">Manual Work Reduced</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capability Architecture -->
+    <section class="capability-section" id="capabilities">
+        <div class="section-wrapper">
+            <h2 class="section-title">Capability Architecture</h2>
+            <p class="section-sub">Unified Enterprise Transformation — Powered by Agentic Fabric</p>
+
+            <!-- Agentic Fabric Core -->
+            <div class="agentic-core">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">⬡</div>
+                <h3>Agentic Fabric</h3>
+                <p class="agentic-sub">AI Orchestration Core</p>
+                <p>Proprietary AI engine unifying data, platforms, and operational intelligence into a single execution layer — enabling autonomous multi-agent task execution, real-time enterprise data integration, and embedded governance across every engagement.</p>
+            </div>
+
+            <!-- 6 Capability Cards -->
+            <div class="capability-grid">
+                <div class="capability-card">
+                    <div class="cap-icon">🏛</div>
+                    <h3>Strategic Consulting</h3>
+                    <p>Enterprise operating model redesign, banking modernization, and GCC setup. We translate strategy into executable architecture.</p>
+                    <div class="cap-tags">
+                        <span class="cap-tag">GCC Strategy</span>
+                        <span class="cap-tag">Operating Models</span>
+                        <span class="cap-tag">Modernisation</span>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="cap-icon">📋</div>
+                    <h3>Program & Delivery</h3>
+                    <p>End-to-end program management and enterprise-scale execution. Delivery assurance from initiation to operational handover.</p>
+                    <div class="cap-tags">
+                        <span class="cap-tag">Program Mgmt</span>
+                        <span class="cap-tag">Delivery Assurance</span>
+                        <span class="cap-tag">PMO Setup</span>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="cap-icon">⚙️</div>
+                    <h3>Digital & Engineering</h3>
+                    <p>Platform engineering, cloud modernization, cybersecurity, and data platforms. Full-stack execution from architecture to deployment.</p>
+                    <div class="cap-tags">
+                        <span class="cap-tag">Cloud</span>
+                        <span class="cap-tag">Platform Eng</span>
+                        <span class="cap-tag">Data Platforms</span>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="cap-icon">🧩</div>
+                    <h3>Technology Products</h3>
+                    <p>Proprietary platforms delivering immediate operational and compliance value. Pre-built, enterprise-grade, deployment-ready.</p>
+                    <div class="cap-tags">
+                        <span class="cap-tag">ServCrust</span>
+                        <span class="cap-tag">SkillNet</span>
+                        <span class="cap-tag">C2Hire</span>
+                        <span class="cap-tag">fnCyber</span>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="cap-icon">👥</div>
+                    <h3>Staffing & Manpower</h3>
+                    <p>Permanent, contract, and embedded talent across technology and banking. Execution-ready teams deployed at scale.</p>
+                    <div class="cap-tags">
+                        <span class="cap-tag">RPO</span>
+                        <span class="cap-tag">Contract Staffing</span>
+                        <span class="cap-tag">Executive Search</span>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="cap-icon">🎓</div>
+                    <h3>Workforce Solutions</h3>
+                    <p>Skilling ecosystems, training platforms, and large-scale capability building. Build-Train-Deploy model for sustained talent advantage.</p>
+                    <div class="cap-tags">
+                        <span class="cap-tag">Build-Train-Deploy</span>
+                        <span class="cap-tag">L&D Platforms</span>
+                        <span class="cap-tag">Credentials</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proprietary Products -->
+    <section class="products-section" id="products">
+        <div class="section-wrapper">
+            <h2 class="section-title">Proprietary Products & Platforms</h2>
+            <p class="section-sub">Enterprise-Grade Software Assets Accelerating Operational Value</p>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-name">Agentic Fabric</div>
+                    <div class="product-category">AI Orchestration Core</div>
+                    <p>Autonomous multi-agent task execution, real-time enterprise data integration, and embedded governance — the intelligence layer powering every Cantellat engagement.</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-name">ServCrust</div>
+                    <div class="product-category">Service Delivery</div>
+                    <p>Service delivery and operations orchestration platform automating enterprise workflow execution across distributed networks and field operations.</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-name">SkillNet</div>
+                    <div class="product-category">Skills Management</div>
+                    <p>Comprehensive skills intelligence and talent management platform enabling workforce capability mapping, development, and deployment at scale.</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-name">C2Hire</div>
+                    <div class="product-category">AI Recruitment</div>
+                    <p>Advanced AI-powered recruitment and hiring platform reducing time-to-hire and improving candidate quality through intelligent matching and screening.</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-name">Spryple</div>
+                    <div class="product-category">HR Technology</div>
+                    <p>Comprehensive talent acquisition and HR technology platform integrating the full employee lifecycle from sourcing to performance management.</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-name">fnCyber</div>
+                    <div class="product-category">Cybersecurity</div>
+                    <p>Enterprise-grade cybersecurity governance, vulnerability mapping, and threat orchestration. Compliance-first, continuously adaptive security posture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BFSI Section -->
+    <section class="bfsi-section" id="bfsi">
+        <div class="section-wrapper">
+            <h2 class="section-title">BFSI & Fintech</h2>
+            <p class="section-sub">Banking Transformation at the Intersection of Strategy, Technology, and Regulatory Execution</p>
+            <div class="bfsi-content">
+                <h2>Active Engagements & Ecosystem</h2>
+                <p>BFSI transformation demands more than technology deployment — it requires integrated strategy, regulatory expertise, and engineering execution delivered in concert. Cantellat operates at this intersection.</p>
+
+                <div style="margin: 2rem 0; padding: 2rem; background: rgba(0,212,255,0.05); border-left: 4px solid #00d4ff; border-radius: 0 8px 8px 0;">
+                    <h3 style="color: #00d4ff; margin-bottom: 1.5rem;">Active Transformations</h3>
+                    <p style="margin-bottom: 1rem;"><strong style="color: #fff;">Union Digital Philippines:</strong> Active digital banking transformation engagement — deploying modern infrastructure to accelerate financial inclusion across the Philippines.</p>
+                    <p><strong style="color: #fff;">Finternet:</strong> Building the financial internet — creating programmable infrastructure for the next generation of global finance alongside the Finternet ecosystem.</p>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem;">Leadership & Institutional Depth</h3>
+                    <p>Our leadership brings decades of institutional experience from <strong>Bank of America, Wells Fargo, HSBC, and Accenture</strong> — spanning complex regulatory programs, transformation mandates, and AML compliance across global markets. This expertise is backed by multiple patents in customer onboarding, KYC, and AML.</p>
+                    <p style="margin-top: 1rem;">We are focused on transforming ASEAN's small to mid-tier banks and the broader financial ecosystem — combining agentic AI with programmable finance to provide the execution engine where governments and institutions are looking to modernize.</p>
+                </div>
+
+                <div class="bfsi-highlights">
+                    <div class="highlight">
+                        <h4>Digital Banking Platforms</h4>
+                        <p>Deploy digital banking infrastructure backed by BFSI consulting and regulatory expertise.</p>
+                    </div>
+                    <div class="highlight">
+                        <h4>Embedded Finance</h4>
+                        <p>Expand into financial services without building from scratch. Fintech platform plus GTM execution.</p>
+                    </div>
+                    <div class="highlight">
+                        <h4>Payment Modernization</h4>
+                        <p>Upgrade legacy payment systems to enterprise-grade infrastructure. Compliance-first, speed-optimized.</p>
+                    </div>
+                    <div class="highlight">
+                        <h4>Regulatory Compliance</h4>
+                        <p>Navigate complex regulatory environments across geographies. Compliance architecture built into every deployment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem / Logos -->
+    <section class="ecosystem-section" id="ecosystem">
+        <div class="section-wrapper">
+            <h2 class="section-title">Trusted Across Global Enterprises & Governments</h2>
+            <p class="section-sub">Our ecosystem of clients and partners spans continents and industries</p>
+
+            <!-- Banking & Financial Services -->
+            <div class="ecosystem-category">
+                <h3>Banking & Financial Services</h3>
+                <div class="logos-row">
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/union-digital-bank-logo.jpg" alt="Union Digital Bank">
+                    </div>
+                    <div class="logo-pill">
+                        <img src="images/logos/fnet-logo-white-scaled(1).webp" alt="Finternet">
+                    </div>
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/wowfinstack-logo-white.svg" alt="WowFinstack" style="filter: invert(1);">
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">HSBC</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">FIS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enterprise & Technology -->
+            <div class="ecosystem-category">
+                <h3>Enterprise & Technology</h3>
+                <div class="logos-row">
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/Spryple-logo-e1733136151953.png" alt="Spryple">
+                    </div>
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/servcrust2.png" alt="ServCrust">
+                    </div>
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/C2Hirelogo.jpg" alt="C2Hire">
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Salesforce</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Snowflake</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Google Cloud</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Amdocs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Government & Public Sector -->
+            <div class="ecosystem-category">
+                <h3>Government & Public Sector</h3>
+                <div class="logos-row">
+                    <div class="logo-pill">
+                        <img src="images/logos/NFHLogo-Unit-White.svg" alt="NFH">
+                    </div>
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/Cloudshot.png" alt="Cloudshot">
+                    </div>
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/PPAA_Publishing_Logo.png" alt="PPAA Publishing">
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Capgemini</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Cognizant</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Ecosystem Partners -->
+            <div class="ecosystem-category">
+                <h3>Technology Ecosystem Partners</h3>
+                <div class="logos-row">
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/EkkremisLogo01.png" alt="Ekkremis">
+                    </div>
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/purview-logo-blue.png" alt="Purview">
+                    </div>
+                    <div class="logo-pill">
+                        <img src="images/logos/beckn-io-logo.svg" alt="Beckn">
+                    </div>
+                    <div class="logo-pill white-bg">
+                        <img src="images/logos/Skillnetlogo.png" alt="SkillNet">
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">IBM Security</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Red Hat</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">Splunk</span>
+                    </div>
+                    <div class="logo-pill">
+                        <span class="logo-text">F5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: 0 2rem;">
+        <div class="cta-section" id="contact">
+            <h2>What is your outcome?</h2>
+            <p>Start with one of three questions. The answer determines the engagement path.</p>
+            <div class="cta-buttons">
+                <button class="cta-button" onclick="openContactForm('I have a problem I cannot afford to solve')">I have a problem I cannot afford to solve</button>
+                <button class="cta-button" onclick="openContactForm('I want to reduce operational costs')">I want to reduce operational costs</button>
+                <button class="cta-button" onclick="openContactForm('I want to build a new revenue capability')">I want to build a new revenue capability</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeContactForm()">&times;</span>
+            <h2>Let's Talk</h2>
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+                <input type="hidden" id="outcomeType" name="outcomeType">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="cta-button">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Cantellat</h4>
+                <p>Reshaping Possibilities with Native AI.</p>
+                <p style="margin-top: 0.75rem;">Strategy. Engineering. Workforce. Integrated.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Capabilities</h4>
+                <p><a href="#capabilities">Strategic Consulting</a></p>
+                <p><a href="#capabilities">Digital & Engineering</a></p>
+                <p><a href="workforce.html">Workforce Solutions</a></p>
+                <p><a href="#products">Technology Products</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Specialisations</h4>
+                <p><a href="bfsi.html">BFSI & Fintech</a></p>
+                <p><a href="technical-prowess.html">AI, Blockchain & Cyber</a></p>
+                <p><a href="#ecosystem">Ecosystem</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: <a href="mailto:amit.shukla@cantellat.com">contact@cantellat.com</a></p>
+                <p>Phone: <a href="tel:+6581186414">+65 8118 6414</a></p>
+                <p style="margin-top: 0.75rem;">Hyderabad · Singapore · United States · ASEAN</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Cantellat Solutions. All rights reserved. | Reshaping Possibilities with Native AI</p>
+        </div>
+    </footer>
+
+</body>
+</html>
